@@ -1,4 +1,4 @@
-package com.zuhaibahmad.template.utils;
+package com.zuhaibahmad.githubapidemo.utils;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -50,7 +50,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zuhaibahmad.template.Constants;
+import com.zuhaibahmad.githubapidemo.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;

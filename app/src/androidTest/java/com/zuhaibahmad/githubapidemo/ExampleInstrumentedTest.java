@@ -1,4 +1,4 @@
-package com.zuhaibahmad.template;
+package com.zuhaibahmad.githubapidemo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

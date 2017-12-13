@@ -1,4 +1,6 @@
-package com.zuhaibahmad.template.usecases.main;
+package com.zuhaibahmad.githubapidemo.usecases.main;
+
+import com.zuhaibahmad.githubapidemo.R;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -6,9 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-
-import com.zuhaibahmad.template.R;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -1,15 +1,12 @@
 package com.zuhaibahmad.githubapidemo;
 
+import com.squareup.leakcanary.LeakCanary;
+import com.zuhaibahmad.githubapidemo.utils.Utils;
+
 import android.app.Activity;
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
-
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Configuration;
-import com.annimon.stream.Stream;
-import com.squareup.leakcanary.LeakCanary;
-import com.zuhaibahmad.githubapidemo.utils.Utils;
 
 import static android.support.v4.app.ActivityCompat.requestPermissions;
 
@@ -30,7 +27,6 @@ public class GitHubApiDemo extends Application {
 	public void onCreate() {
 		super.onCreate();
 		initLeakCanary();                                           // Initialize Leak Canary
-		initActiveAndroid();                                        // Initialize ActiveAndroid DB
 		setupGlobalExceptionHandler();                              // Global exception handling
 	}
 
@@ -57,15 +53,6 @@ public class GitHubApiDemo extends Application {
 			return;
 		}
 		LeakCanary.install(this);
-	}
-
-	/**
-	 * Initializes the ActiveAndroid database
-	 */
-	private void initActiveAndroid() {
-		Configuration.Builder config = new Configuration.Builder(this);
-		Stream.of(Constants.MODELS).forEach(m -> config.addModelClasses(m.getClass()));
-		ActiveAndroid.initialize(config.create());
 	}
 
 	/**
