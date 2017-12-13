@@ -14,10 +14,6 @@ import retrofit2.http.Path;
 
 public interface GitHubClient {
 
-	@GET("/repos/{user}/{repo}/contributors?page={page}&?access_token=fff")
-	Single<List<Contributor>> getRepo(
-			@Path("user") String user,
-			@Path("repo") String repo,
-			@Path("page") String page
-	);
+	@GET("repos/{user}/{repo}/contributors?page=1&?access_token=fff")
+	Single<List<Contributor>> getRepo(@Path("user") String user, @Path("repo") String repo);
 }

@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">GitHub Api Demo</string>
-    <string name="title_activity_main">Hello World!</string>
-    <string name="placeholder_action_message">Replace with your own action</string>
+    <string name="title_activity_main">GitHub Top Contributors</string>
+    <string name="error_msg">Error Occurred While Loading Data From Server</string>
 </resources>

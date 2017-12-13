@@ -115,4 +115,13 @@ public class Contributor {
 	public int getContributions() {
 		return contributions;
 	}
+
+	@Override
+	public String toString() {
+		return "Contributor{" +
+		       "login='" + login + '\'' +
+		       ", avatar_url='" + avatar_url + '\'' +
+		       ", contributions=" + contributions +
+		       '}';
+	}
 }

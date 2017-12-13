@@ -1,6 +1,5 @@
 package com.zuhaibahmad.githubapidemo.models;
 
-import com.squareup.haha.perflib.Instance;
 import com.zuhaibahmad.githubapidemo.Constants;
 import com.zuhaibahmad.githubapidemo.data.Contributor;
 import com.zuhaibahmad.githubapidemo.network.GitHubClient;
@@ -42,7 +41,7 @@ public class AppDataManager implements DataManager {
 	@Override
 	public Single<List<Contributor>> getContributors(String user, String repo) {
 		return apiClient
-				.getRepo(user, repo, "1")
+				.getRepo(user, repo)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}

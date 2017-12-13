@@ -166,14 +166,12 @@ dependencies {
     implementation "com.android.support:cardview-v7:$asl_version"
     implementation "com.android.support:recyclerview-v7:$asl_version"
     implementation "com.android.support:design:$asl_version"
-    implementation "com.google.guava:guava:$guava_version"
-    implementation "com.android.support.constraint:constraint-layout:$constlayout_version"
 
     // Miscellaneous
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.jaredrummler:material-spinner:1.1.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.4'
-    implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     // Butterknife
     implementation "com.jakewharton:butterknife:$butterknife_version"
@@ -186,11 +184,6 @@ dependencies {
 
     // Rx
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-
-    // Leak Canary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     // Testing
     testImplementation 'junit:junit:4.12'
