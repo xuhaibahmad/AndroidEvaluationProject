@@ -1,0 +1,240 @@
+apply plugin: 'com.android.application'
+apply plugin: 'jacoco'
+
+// For Kotlin Projects
+//apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-kapt'
+
+
+ext.versionMajor = 0
+ext.versionMinor = 4
+ext.versionPatch = 0
+ext.versionBuild = 1
+
+
+ext.verCode = versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
+ext.verName = "${versionMajor}.${versionMinor}.${versionPatch}"
+
+// Get the date of build
+def getDateOfBuild = { -> // ISO 8601 time format
+    return new Date().format("yyyy-MM-dd'T'HH:mm'Z'").toString().trim()
+}
+
+// Get the last Git Short Hash
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+
+android {
+    signingConfigs {
+        release
+    }
+    compileSdkVersion latest_sdk_ver
+    buildToolsVersion build_tools_ver
+    defaultConfig {
+        // TODO Change application id
+        applicationId "com.zuhaibahmad.template"
+        minSdkVersion min_sdk_ver
+        targetSdkVersion latest_sdk_ver
+        versionCode verCode
+        versionName verName
+        //multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resConfigs "auto"
+
+        // Build Date
+        buildConfigField "String", "DATE_OF_BUILD", "\"${getDateOfBuild()}\""
+        // Git Hash for integrity checks
+        buildConfigField "String", "GIT_SHA", "\"${getGitHash()}\""
+    }
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            testCoverageEnabled = false
+        }
+    }
+    dexOptions {
+        jumboMode = true
+        preDexLibraries true
+        javaMaxHeapSize "4g"
+    }
+    // Specifies a flavor dimension.
+    flavorDimensions "main"
+    productFlavors {
+        prod {
+            minSdkVersion 16
+            buildConfigField "boolean", "MOCK_VERSION", "false"
+            buildConfigField "boolean", "DEMO_VERSION", "false"
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [analytics_deactivated: "false"]
+        }
+        dev {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+            minSdkVersion 21
+            buildConfigField "boolean", "MOCK_VERSION", "true"
+            buildConfigField "boolean", "DEMO_VERSION", "false"
+            manifestPlaceholders = [analytics_deactivated: "true"]
+        }
+        demo {
+            minSdkVersion 21
+            buildConfigField "boolean", "MOCK_VERSION", "true"
+            buildConfigField "boolean", "DEMO_VERSION", "true"
+            manifestPlaceholders = [analytics_deactivated: "true"]
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/NOTICE'               // Do not include NOTICE file
+        exclude 'META-INF/LICENSE'              // Do not include LICENSE file
+        exclude 'META-INF/rxjava.properties'    // Do not include RxJava properties file
+    }
+    testOptions {
+        unitTests {
+            all {
+                // configure the test JVM arguments
+                jvmArgs '-noverify'
+            }
+        }
+    }
+    testOptions.unitTests.all {
+        testLogging {
+            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            outputs.upToDateWhen { false }
+            showStandardStreams = true
+        }
+    }
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+    }
+}
+
+def Properties props = new Properties()
+def propFile = new File('keystore.properties')
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null && props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
+            props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+        android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
+        android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
+        android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
+        android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
+    } else {
+        println 'signing.properties found but some entries are missing'
+        android.buildTypes.release.signingConfig = null
+    }
+} else {
+    println 'signing.properties not found'
+    android.buildTypes.release.signingConfig = null
+}
+
+repositories {
+    flatDir {
+        dirs 'libs-aar'
+    }
+    jcenter()
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+    maven { url "http://dl.bintray.com/lukaville/maven" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url 'https://maven.google.com' }
+}
+
+dependencies {
+
+    // Android
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:$asl_version"
+    implementation "com.android.support:cardview-v7:$asl_version"
+    implementation "com.android.support:recyclerview-v7:$asl_version"
+    implementation "com.android.support:design:$asl_version"
+    implementation "com.google.guava:guava:$guava_version"
+    implementation "com.android.support.constraint:constraint-layout:$constlayout_version"
+
+    // Kotlin
+    //implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    //implementation "org.jetbrains.anko:anko-commons:$anko_version"
+
+    // Miscellaneous
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.jaredrummler:material-spinner:1.1.0'
+    implementation 'com.intuit.sdp:sdp-android:1.0.4'
+    implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.8.5'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.8.5'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.5'
+
+    // Rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    //implementation 'io.reactivex.rxjava2:rxkotlin:2.0.2'
+    //implementation 'com.androidhuman.rxfirebase2:firebase-auth-kotlin:11.2.2.0'
+    //implementation 'com.androidhuman.rxfirebase2:firebase-database-kotlin:11.2.2.0'
+
+    // Multidex
+    //implementation 'com.android.support:multidex:1.0.2'
+
+    // Facebook
+    //implementation 'com.facebook.android:facebook-login:4.27.0'
+
+    // Twitter
+    //compile("com.twitter.sdk.android:twitter-core:3.0.0@aar") { transitive = true }
+
+    // Firebase
+    //implementation "com.google.firebase:firebase-core:$firebase_version"
+    //implementation "com.google.firebase:firebase-database:$firebase_version"
+    //implementation "com.google.firebase:firebase-crash:$firebase_version"
+    //implementation "com.google.firebase:firebase-auth:$firebase_version"
+    //implementation "com.google.firebase:firebase-messaging:$firebase_version"
+    //implementation "com.google.firebase:firebase-invites:$firebase_version"
+    //implementation "com.google.firebase:firebase-ads:$firebase_version"
+
+    // Firebase UI
+    //implementation "com.firebaseui:firebase-ui-database:$firebase_ui_version"
+    //implementation "com.firebaseui:firebase-ui-auth:$firebase_ui_version"
+    //implementation "com.firebaseui:firebase-ui-storage:$firebase_ui_version"
+
+    // Leak Canary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+
+    // Testing
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation "com.android.support:support-annotations:$asl_version"
+    androidTestImplementation "com.android.support.test:runner:1.0.1"
+    androidTestImplementation "com.android.support.test:rules:1.0.1"
+    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
+    testImplementation 'org.powermock:powermock:1.6.6'
+    testImplementation 'org.powermock:powermock-module-junit4:1.7.0RC2'
+    testImplementation 'org.powermock:powermock-api-mockito:1.6.6'
+    testImplementation 'org.powermock:powermock-api-easymock:1.6.6'
+    testImplementation "org.robolectric:robolectric:3.4.2"
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    // Runtime Permissions
+    compile('com.github.hotchemi:permissionsdispatcher:3.0.1')
+    //kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.0.1'
+}
+
+fileTree(dir: 'libs-aar', include: '*.aar')
+        .each { File file ->
+    dependencies
+            .add("compile", [name: file.name.replaceFirst(~/\.[^\.]+$/, ''), ext: 'aar'])
+}
+
+//apply plugin: 'com.google.gms.google-services'

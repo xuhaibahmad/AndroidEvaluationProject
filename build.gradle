@@ -1,0 +1,39 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    ext.min_sdk_ver = 16
+    ext.latest_sdk_ver = 27
+    ext.build_tools_ver = '27.0.1'
+
+    ext.kotlin_version = '1.1.51'
+    ext.anko_version = '0.10.1'
+    ext.asl_version = '27.0.2'
+    ext.espresso_version = '3.0.1'
+    ext.atsl_version = '1.0.1'
+    ext.constlayout_version = '1.0.2'
+    ext.leak_canary_version = '1.5.1'
+    ext.guava_version = '23.0-android'
+    ext.firebase_version = '11.4.2'
+    ext.firebase_ui_version = '3.1.0'
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
