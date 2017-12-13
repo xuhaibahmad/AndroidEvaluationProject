@@ -1,7 +1,7 @@
-package com.zuhaibahmad.template.usecases.main;
+package com.zuhaibahmad.githubapidemo.usecases.main;
 
-import com.zuhaibahmad.template.MyApp;
-import com.zuhaibahmad.template.R;
+import com.zuhaibahmad.githubapidemo.GitHubApiDemo;
+import com.zuhaibahmad.githubapidemo.R;
 
 /**
  * Created by Zuhaib Ahmad on 3/31/2017.
@@ -13,18 +13,18 @@ public class MainPresenter implements ContractMain.Presenter {
 
 	private final ContractMain.View mView;
 	private final MainActivity mActivity;
-	private final MyApp mApplication;
+	private final GitHubApiDemo mApplication;
 
 	public MainPresenter(ContractMain.View view) {
 		mView = view;
 		mActivity = (MainActivity) mView;
 
-		mApplication = (MyApp) mActivity.getApplicationContext();
+		mApplication = (GitHubApiDemo) mActivity.getApplicationContext();
 	}
 
 	@Override
 	public void start() {
-		MyApp.checkPermissions(mActivity);
+		GitHubApiDemo.checkPermissions(mActivity);
 	}
 
 	@Override

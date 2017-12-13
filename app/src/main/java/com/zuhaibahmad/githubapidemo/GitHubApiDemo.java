@@ -1,4 +1,4 @@
-package com.zuhaibahmad.template;
+package com.zuhaibahmad.githubapidemo;
 
 import android.app.Activity;
 import android.app.Application;
@@ -9,7 +9,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
 import com.annimon.stream.Stream;
 import com.squareup.leakcanary.LeakCanary;
-import com.zuhaibahmad.template.utils.Utils;
+import com.zuhaibahmad.githubapidemo.utils.Utils;
 
 import static android.support.v4.app.ActivityCompat.requestPermissions;
 
@@ -20,7 +20,7 @@ import static android.support.v4.app.ActivityCompat.requestPermissions;
  */
 
 @SuppressWarnings("unchecked")
-public class MyApp extends Application {
+public class GitHubApiDemo extends Application {
 
 	static {
 		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);

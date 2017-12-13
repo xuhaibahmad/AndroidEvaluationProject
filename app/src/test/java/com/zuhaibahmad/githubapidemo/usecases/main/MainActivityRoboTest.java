@@ -1,8 +1,8 @@
-package com.zuhaibahmad.template.usecases.main;
+package com.zuhaibahmad.githubapidemo.usecases.main;
 
-import com.zuhaibahmad.template.BaseRobolectricTest;
-import com.zuhaibahmad.template.MyApp;
-import com.zuhaibahmad.template.TestApplication;
+import com.zuhaibahmad.githubapidemo.BaseRobolectricTest;
+import com.zuhaibahmad.githubapidemo.GitHubApiDemo;
+import com.zuhaibahmad.githubapidemo.TestApplication;
 
 import org.junit.After;
 import org.junit.Before;
@@ -30,7 +30,7 @@ public class MainActivityRoboTest extends BaseRobolectricTest<MainActivity> {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		MyApp app = (MyApp) RuntimeEnvironment.application;
+		GitHubApiDemo app = (GitHubApiDemo) RuntimeEnvironment.application;
 
 		mView = getActivity();
 		mPresenter = mView.getPresenter();

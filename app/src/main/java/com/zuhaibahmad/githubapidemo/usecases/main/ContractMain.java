@@ -1,7 +1,7 @@
-package com.zuhaibahmad.template.usecases.main;
+package com.zuhaibahmad.githubapidemo.usecases.main;
 
-import com.zuhaibahmad.template.usecases.BasePresenter;
-import com.zuhaibahmad.template.usecases.BaseView;
+import com.zuhaibahmad.githubapidemo.usecases.BasePresenter;
+import com.zuhaibahmad.githubapidemo.usecases.BaseView;
 
 /**
  * Created by Zuhaib Ahmad on 3/31/2017.

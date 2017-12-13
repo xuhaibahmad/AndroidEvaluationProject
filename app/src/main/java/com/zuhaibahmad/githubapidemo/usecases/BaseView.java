@@ -1,4 +1,4 @@
-package com.zuhaibahmad.template.usecases;
+package com.zuhaibahmad.githubapidemo.usecases;
 
 /**
  * Created by Zuhaib Ahmad on 3/28/2017.

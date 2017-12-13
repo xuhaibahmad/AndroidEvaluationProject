@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.zuhaibahmad.template;
+package com.zuhaibahmad.githubapidemo;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
@@ -26,7 +26,7 @@ import com.activeandroid.Configuration;
  * Application subclass to be used in Tests
  */
 
-public class TestApplication extends MyApp {
+public class TestApplication extends GitHubApiDemo {
 
     @Override
     public void onCreate() {
