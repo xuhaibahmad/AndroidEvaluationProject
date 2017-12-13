@@ -17,7 +17,7 @@ public final class Constants {
 	public static final String LOG_FILE_NAME                    = TAG + "-Log.txt";
 	public static final String DIRECTORY_NAME                   = TAG + " Log";
 
-	public static final String API_ENDPOINT						= "https://api.github.com";
+	public static final String API_BASE_URL						= "https://api.github.com";
 	public static final String REPO_ENDPOINT					= "/repos/google/protobuf/";
 	public static final String CONTRIBUTORS_ENDPOINT			= "contributors?page=1&?access_token=fff";
 

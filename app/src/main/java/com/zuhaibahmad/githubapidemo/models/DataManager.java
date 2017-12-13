@@ -11,5 +11,5 @@ import io.reactivex.Single;
  */
 
 public interface DataManager {
-	public Single<List<Contributor>> getContributors(String user, String repo);
+	Single<List<Contributor>> getContributors(String user, String repo);
 }

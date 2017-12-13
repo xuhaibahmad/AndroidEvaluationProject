@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity implements ContractMain.View
 		setSupportActionBar(mToolbar);
 
 		mPresenter = new MainPresenter(this);
-		mPresenter.start();
 	}
 
-	@OnClick(R.id.fab)
-	public void onFloatingActionButtonClick(View view){
-		mPresenter.onAction();
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mPresenter.start();
 	}
 
 	@Override
